@@ -40,7 +40,7 @@ def compute_similarity(input_text, page_content):
     page_embedding = embedder.encode([page_content])
     return cosine_similarity(input_embedding, page_embedding)[0][0]
 
-def user_friendly_fact_check(input_text):
+def user_friendly_fact_check(input_text, threshold=0.75):
     key_terms = input_text.split()[:3]
     best_match_score = 0
     best_match_details = None
@@ -53,11 +53,11 @@ def user_friendly_fact_check(input_text):
                 best_match_score = similarity_score
                 best_match_details = {"name": name, "description": description, "url": url}
 
-    if best_match_score > 0.75:
+    if best_match_score > threshold:
         result = "✅ Fact Check Passed"
         confidence = "High Confidence"
         recommendation = "No further verification needed."
-    elif best_match_score > 0.5:
+    elif best_match_score > 2*threshold/3:
         result = "⚠️ Likely True"
         confidence = "Moderate Confidence"
         recommendation = "Verify further using reliable sources."
@@ -132,7 +132,7 @@ with col_b:
     if st.button("Check Facts"):
         if user_input:
             with st.spinner("Fact-checking..."):
-                result = user_friendly_fact_check(user_input)
+                result = user_friendly_fact_check(user_input, threshold)
                 if result['Fact-Check Result'] == "✅ Fact Check Passed":
                     st.success(f"Fact-Check Result: {result['Fact-Check Result']}")
                 elif result['Fact-Check Result'] == "⚠️ Likely True":
