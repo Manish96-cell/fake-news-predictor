@@ -107,7 +107,7 @@ def user_friendly_fact_check(input_text, threshold=0.75):
 
 # Streamlit App UI
 st.set_page_config(page_title="🔍Misinformation Detection", layout="wide")
-st.markdown("# 🕵️ Misinformation Detection and Fact-Checking 🕵️")
+st.markdown("# 🕵️ Misinformation Detection and Fact-Checking ")
 st.sidebar.markdown("### Advanced Options")
 threshold = st.sidebar.slider("Set Similarity Threshold", 0.0, 1.0, 0.75)
 
