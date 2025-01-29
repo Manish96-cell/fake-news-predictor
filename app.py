@@ -7,7 +7,7 @@ from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from PIL import Image
 import pytesseract  # For OCR
-import cv2
+# import cv2
 import numpy as np
 import pytesseract
 
