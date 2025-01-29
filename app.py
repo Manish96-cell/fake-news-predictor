@@ -11,8 +11,15 @@ import cv2
 import numpy as np
 import pytesseract
 
-# Specify the full path to tesseract.exe
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+import shutil
+
+# Automatically find the Tesseract installation
+tesseract_path = shutil.which("tesseract")
+if tesseract_path:
+    pytesseract.pytesseract.tesseract_cmd = tesseract_path
+else:
+    raise RuntimeError("Tesseract not found. Ensure it's installed in the Streamlit environment.")
+
 
 # Load models
 model = BertForSequenceClassification.from_pretrained("models/misinformation_model")
